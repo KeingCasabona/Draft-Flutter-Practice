@@ -29,7 +29,7 @@ class _CounterFuntionsScreenState extends State<CounterFuntionsScreen> {
                     clickCounter = 0;
                   });
                 },
-                icon: Icon(Icons.refresh_sharp))
+                icon: const Icon(Icons.refresh_sharp))
           ],
         ),
         body: Center(
@@ -45,7 +45,7 @@ class _CounterFuntionsScreenState extends State<CounterFuntionsScreen> {
               ),
               Text(
                 'Click${clickCounter < 2 ? '' : 's'}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w200,
                 ),
@@ -56,37 +56,54 @@ class _CounterFuntionsScreenState extends State<CounterFuntionsScreen> {
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              shape: StadiumBorder(),
+            CustomFloatingActionButton(
+              icon: Icons.refresh_rounded,
               onPressed: () {
                 setState(() {
                   clickCounter = 0;
                 });
               },
-              child: const Icon(Icons.refresh_rounded),
             ),
-            SizedBox(height: 10),
-            FloatingActionButton(
-              shape: StadiumBorder(),
-              onPressed: () {
-                setState(() {
-                  //clickCounter = clickCounter + 1;
-                  clickCounter++;
-                });
-              },
-              child: const Icon(Icons.plus_one),
-            ),
-            SizedBox(height: 10),
-            FloatingActionButton(
-              shape: StadiumBorder(),
-              onPressed: () {
-                setState(() {
-                  clickCounter--;
-                });
-              },
-              child: const Icon(Icons.exposure_minus_1),
-            )
+            const SizedBox(height: 30),
+            CustomFloatingActionButton(
+                icon: Icons.plus_one,
+                onPressed: () {
+                  setState(() {
+                    clickCounter++;
+                  });
+                }),
+            const SizedBox(height: 30),
+            CustomFloatingActionButton(
+                icon: Icons.exposure_minus_1,
+                onPressed: () {
+                  setState(() {
+                    if (clickCounter == 0) return;
+                    clickCounter--;
+                  });
+                })
           ],
         ));
+  }
+}
+
+class CustomFloatingActionButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  const CustomFloatingActionButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      //Vibracion o sonido depende del tipo de dispositivo:
+      enableFeedback: true,
+      //Border redondeados:
+      shape: const StadiumBorder(),
+      onPressed: onPressed,
+      child: Icon(icon),
+    );
   }
 }

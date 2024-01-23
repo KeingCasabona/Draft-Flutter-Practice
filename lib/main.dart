@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blueAccent,
       ),
       title: 'Material App',
-      home: CounterFuntionsScreen(),
+      home: const CounterFuntionsScreen(),
     );
   }
 }
